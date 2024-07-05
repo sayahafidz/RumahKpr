@@ -30,6 +30,8 @@ class BookingController extends Controller
             'gaji' => 'required|string',
             'jenis_pembayaran' => 'required|in:tabungan_mandiri,tabungan_lainnya',
             'janji_temu' => 'required|date',
+            'jangka_waktu' => 'required|string',
+            'bunga' => 'required|string',
         ]);
 
         try {

@@ -153,6 +153,12 @@ class PembayaranController extends Controller
 
     public function bayar()
     {
+
+
+
+
+
+
         return view('page.pembayaran.index', [
             'pembayaran' => Booking::all()->load('foto')
         ]);
@@ -214,5 +220,38 @@ class PembayaranController extends Controller
         }
 
         return redirect()->back()->with('success', 'Bukti transfer uploaded successfully.');
+    }
+
+
+    public function dataAngsuran($id)
+    {
+        // get the booking
+        $booking = Booking::find($id);
+        if (!$booking) {
+            return response()->json(['error' => 'Booking not found'], 404);
+        }
+
+        $kpr = [
+            'jangka_waktu' => $booking->jangka_waktu * 12
+        ];
+        $table = [];
+        $sisa_pinjaman = $booking->properti->harga;
+
+        for ($i = 1; $i <= $kpr['jangka_waktu']; $i++) {
+            $result['pokok'] = $booking->properti->harga / $kpr['jangka_waktu'];
+            $sisa_pinjaman -= $result['pokok'];
+            $result['bunga'] = $booking->properti->harga * ($booking->bunga / 100) / 12;
+            $result['angsuran'] = $result['pokok'] + $result['bunga'];
+
+            $table[] = [
+                "bulan" => $i,
+                "pokok" => $result['pokok'],
+                "bunga" => $result['bunga'],
+                "angsuran" => $result['angsuran'],
+                "sisa" => $sisa_pinjaman,
+            ];
+        }
+
+        return response()->json($table);
     }
 }

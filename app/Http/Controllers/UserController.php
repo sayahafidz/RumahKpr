@@ -109,7 +109,6 @@ class UserController extends Controller
                     ];
                 }
             }
-
         }
 
 
@@ -134,24 +133,30 @@ class UserController extends Controller
 
     public function detail_booking($id)
     {
+        $pembayarandata = Booking::where('user_id', Auth::user()->id)->with('properti')->get();
+
         $pembayaran = Booking::find($id);
         return view('page.landing.detail_booking.index', [
             'perumahan' => KategoriProperti::all(),
             'pembayaran' => $pembayaran,
+            'items' => $pembayarandata
         ]);
     }
 
     public function riwayat()
     {
-        $pembayaran = Booking::where('user_id', Auth::user()->id)->with('dokumen')->get();
+        $pembayaran = Booking::where('user_id', Auth::user()->id)->with('properti')->get();
+
         if ($pembayaran->isEmpty()) {
             return redirect()->route('landing');
         }
+
         return view('page.landing.riwayat.index', [
             'pembayaran' => $pembayaran,
             'perumahan' => KategoriProperti::all(),
         ]);
     }
+
 
     public function checkout($id)
     {

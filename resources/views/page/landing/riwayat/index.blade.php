@@ -55,10 +55,10 @@
                     </td>
                     <td>
                         <a href="{{ route('detail_booking', $item->id) }}" class="btn btn-primary">Detail</a>
-                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                        {{-- <button type="button" class="btn btn-success" data-bs-toggle="modal"
                             data-bs-target="#buktiTransfer-{{ $item->id }}">
                             Bayar
-                        </button>
+                        </button> --}}
                     </td>
                 </tr>
                 <div class="modal fade" id="buktiTransfer-{{ $item->id }}" tabindex="-1"
@@ -73,9 +73,10 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                @if ($item->foto->isNotEmpty() && $item->status == 'paid')
-                                @foreach ($item->foto as $key => $foto)
-                                <div class="row mt-2">
+
+                                {{-- @if ($item->foto->isNotEmpty() && $item->status == 'paid')
+                                @foreach ($item->foto as $key => $foto) --}}
+                                {{-- <div class="row mt-2">
                                     <div class="col-6">
                                         <img src="{{ asset('storage/bukti_transfer/' . $foto->foto) }}" alt=""
                                             class="img-fluid">
@@ -90,10 +91,10 @@
                                             <h4>Rp{{ number_format($foto->jumlah_transfer, 0, ',', '.') }}</h4>
                                         </div>
                                     </div>
-                                </div>
-                                @endforeach
-                                @else
-                                <p class="text-muted">No proof of payment uploaded yet.</p>
+                                </div> --}}
+                                {{-- @endforeach --}}
+                                {{-- @else --}}
+                                {{-- <p class="text-muted">No proof of payment uploaded yet.</p>
 
 
                                 <form action="{{ route('uploadBuktiFotoBayar', $item->id) }}" method="post"
@@ -104,25 +105,23 @@
                                         <input type="file" class="form-control" id="bukti_transfer"
                                             name="bukti_transfer" required>
                                     </div>
-                                    {{-- tanngal transfer --}}
                                     <div class="mb-3">
                                         <label for="tanggal_transfer" class="form-label">Tanggal Transfer</label>
                                         <input type="date" class="form-control" id="tanggal_transfer"
                                             name="tanggal_transfer" required>
                                     </div>
-                                    {{-- jumlah transfer --}}
                                     <div class="mb-3">
                                         <label for="jumlah_transfer" class="form-label">Jumlah Transfer</label>
                                         <input type="number" class="form-control" id="jumlah_transfer"
                                             name="jumlah_transfer" required>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Upload</button>
-                                </form>
+                                </form> --}}
                             </div>
+                            {{-- @endif --}}
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             </div>
-                            @endif
                         </div>
                     </div>
                 </div>

@@ -12,7 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         .background-section {
-            background-image: url('{{ asset('/assets/image/tenera/GAPURA KOMPLEK.jpg') }}');
+            background-image: url('{{ asset(' /assets/image/tenera/GAPURA KOMPLEK.jpg') }}');
         }
 
         .nav-item.dropdown .dropdown-menu {
@@ -28,28 +28,28 @@
 
 <body>
     @if (session('success'))
-        <script>
-            Swal.fire({
+    <script>
+        Swal.fire({
                 icon: 'success',
                 title: 'Berhasil',
                 text: '{{ session('success') }}',
             })
-        </script>
+    </script>
     @endif
 
     @if (session('error'))
-        <script>
-            Swal.fire({
+    <script>
+        Swal.fire({
                 icon: 'error',
                 title: 'Gagal',
                 text: '{{ session('error') }}',
             })
-        </script>
+    </script>
     @endif
     <nav class="navbar navbar-expand-lg bg-body-tertiary bg-opacity[100%]">
         <div class="container">
             <a class="navbar-brand" href="{{ route('landing') }}">
-                <img src="{{ asset('assets/image/logo.png') }}" alt="" width="100" height="84">
+                <img src="{{ asset('assets/image/mandiri.png') }}" alt="" height="84">
             </a>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fs-5">
@@ -63,10 +63,10 @@
                         </a>
                         <ul class="dropdown-menu border-dropdown">
                             @foreach ($perumahan as $perum)
-                                <li>
-                                    <a class="dropdown-item"
-                                        href="{{ route('perumahan', $perum->id) }}">{{ $perum->nama }}</a>
-                                </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('perumahan', $perum->id) }}">{{ $perum->nama
+                                    }}</a>
+                            </li>
                             @endforeach
                         </ul>
                     </li>
@@ -77,20 +77,20 @@
                         </a>
                         <ul class="dropdown-menu">
                             @auth
-                                <li>
-                                    @if (Auth::user()->role == 'admin')
-                                        <a href="{{ route('dashboard') }}" class="dropdown-item">Dashboard</a>
-                                    @else
-                                        <a href="{{ route('akun') }}" class="dropdown-item">Akun</a>
-                                    @endif
-                                    @if (!Auth::user()->booking->isEmpty())
-                                        <a href="{{ route('riwayat') }}" class="dropdown-item">Riwayat</a>
-                                    @endif
-                                <li><a href="{{ route('auth.logout') }}" class="dropdown-item">Logout</a></li>
-                        </li>
+                            <li>
+                                @if (Auth::user()->role == 'admin')
+                                <a href="{{ route('dashboard') }}" class="dropdown-item">Dashboard</a>
+                                @else
+                                <a href="{{ route('akun') }}" class="dropdown-item">Akun</a>
+                                @endif
+                                @if (!Auth::user()->booking->isEmpty())
+                                <a href="{{ route('riwayat') }}" class="dropdown-item">Riwayat</a>
+                                @endif
+                            <li><a href="{{ route('auth.logout') }}" class="dropdown-item">Logout</a></li>
+                    </li>
                     @endauth
                     @guest
-                        <li><a href="{{ route('auth.login') }}" class="dropdown-item">Login</a></li>
+                    <li><a href="{{ route('auth.login') }}" class="dropdown-item">Login</a></li>
                     @endguest
                 </ul>
                 </li>

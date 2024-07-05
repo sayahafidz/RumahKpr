@@ -53,5 +53,7 @@ Route::middleware(['web:user'])->group(function () {
 
     Route::post('/uploadBayarFoto/{id}', [PembayaranController::class, 'uploadBuktiTransfer'])->name('uploadBuktiFotoBayar');
 
+    Route::get('/angsuran/{id}', [PembayaranController::class, 'dataAngsuran'])->name('angsuran');
+
     // Route::get('/pembayaran', [PembayaranController::class, 'bayarUser'])->name('pembayaran');
 });
