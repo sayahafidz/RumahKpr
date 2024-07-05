@@ -18,23 +18,23 @@
 
 <body>
     @if (session('success'))
-        <script>
-            Swal.fire({
+    <script>
+        Swal.fire({
                 icon: 'success',
                 title: 'Berhasil',
                 text: '{{ session('success') }}',
             })
-        </script>
+    </script>
     @endif
 
     @if (session('error'))
-        <script>
-            Swal.fire({
+    <script>
+        Swal.fire({
                 icon: 'error',
                 title: 'Gagal',
                 text: '{{ session('error') }}',
             })
-        </script>
+    </script>
     @endif
     <div class="wrapper">
         <aside id="sidebar" class="js-sidebar">
@@ -46,37 +46,36 @@
                 <ul class="sidebar-nav">
                     <li class="sidebar-header">
                         Dashboard @if (Auth::user()->role == 'admin')
-                            Admin
+                        Admin
                         @else
-                            User
+                        User
                         @endif
                     </li>
                     @if (Auth::user()->role == 'admin')
-                        <li class="sidebar-item">
-                            <a href="{{ route('user.index') }}" class="sidebar-link">
-                                <i class="fa-solid fa-user pe-2"></i>
-                                Akun User
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link collapsed" data-bs-target="#kategori"
-                                data-bs-toggle="collapse" aria-expanded="false"><i class="fa-solid fa-home pe-2"></i>
-                                Properti
-                            </a>
-                            <ul id="kategori" class="sidebar-dropdown list-unstyled collapse"
-                                data-bs-parent="#sidebar">
-                                <li class="sidebar-item">
-                                    <a href="{{ route('kategori.index') }}" class="sidebar-link">Kategori</a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a href="{{ route('properti.index') }}" class="sidebar-link">Properti</a>
-                                </li>
-                            </ul>
-                        </li>
+                    <li class="sidebar-item">
+                        <a href="{{ route('user.index') }}" class="sidebar-link">
+                            <i class="fa-solid fa-user pe-2"></i>
+                            Akun User
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link collapsed" data-bs-target="#kategori" data-bs-toggle="collapse"
+                            aria-expanded="false"><i class="fa-solid fa-home pe-2"></i>
+                            Properti
+                        </a>
+                        <ul id="kategori" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a href="{{ route('kategori.index') }}" class="sidebar-link">Kategori</a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="{{ route('properti.index') }}" class="sidebar-link">Properti</a>
+                            </li>
+                        </ul>
+                    </li>
                     @endif
                     <li class="sidebar-item">
-                        <a href="#" class="sidebar-link collapsed" data-bs-target="#booking"
-                            data-bs-toggle="collapse" aria-expanded="false"><i class="fa-solid fa-file-lines pe-2"></i>
+                        <a href="#" class="sidebar-link collapsed" data-bs-target="#booking" data-bs-toggle="collapse"
+                            aria-expanded="false"><i class="fa-solid fa-file-lines pe-2"></i>
                             Booking
                         </a>
                         <ul id="booking" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
@@ -84,6 +83,12 @@
                                 <a href="{{ route('dashbord.riwayat') }}" class="sidebar-link">Riwayat</a>
                             </li>
                         </ul>
+                        {{-- <ul id="pembayaran" class="sidebar-dropdown list-unstyled collapse"
+                            data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a href="{{ route('dashbord.bayar') }}" class="sidebar-link">Pembaya</a>
+                            </li>
+                        </ul> --}}
                     </li>
                     <hr class="text-white" />
                     <li class="sidebar-item">

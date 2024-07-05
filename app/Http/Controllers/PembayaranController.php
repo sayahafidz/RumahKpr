@@ -76,6 +76,9 @@ class PembayaranController extends Controller
             'status' => 'pending'
         ]);
 
+        // dd($data, $request->all(), $id);
+
+
         return redirect()->route('riwayat')->with('success', 'Data berhasil disimpan');
     }
 
@@ -109,6 +112,23 @@ class PembayaranController extends Controller
                     'status' => $status,
                     'jumlah_dibayar' => $jumlah_dibayar
                 ]);
+
+
+                // // sum all total transfer
+                // $totalTransfer = 0;
+                // $fotopembayaran = FotoPembayaran::where('pembayaran_id', $id)->get();
+                // foreach ($fotopembayaran as $fotopembayaran) {
+                //     $totalTransfer += $fotopembayaran->jumlah_transfer;
+                // }
+
+                // // update the total amount of transfer to the booking
+                // $booking = Booking::find($id);
+                // $booking->jumlah_dibayar = $totalTransfer;
+
+
+
+
+
             } else {
                 $foto = FotoPembayaran::find($id);
                 $foto->update([
@@ -128,5 +148,71 @@ class PembayaranController extends Controller
         }
 
         return redirect()->route('dashbord.pembayaran')->with('Success', 'Data berhasil disimpan');
+    }
+
+
+    public function bayar()
+    {
+        return view('page.pembayaran.index', [
+            'pembayaran' => Booking::all()->load('foto')
+        ]);
+    }
+
+
+    public function uploadBuktiTransfer(Request $request, $id)
+    {
+        $request->validate([
+            'bukti_transfer' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'tanggal_transfer' => 'required|date',
+            'jumlah_transfer' => 'required|numeric'
+
+        ]);
+
+        if ($request->file('bukti_transfer')) {
+            $imageName = time() . '.' . $request->bukti_transfer->extension();
+            $request->bukti_transfer->storeAs('public/bukti_transfer', $imageName);
+
+            // Save the path to the database (assuming you have a 'foto' table and a 'Foto' model)
+            $foto = new FotoPembayaran();
+            $foto->pembayaran_id = $id;
+            $foto->foto = $imageName;
+            $foto->tanggal_transfer = $request->tanggal_transfer;
+            $foto->jumlah_transfer = $request->jumlah_transfer;
+            $foto->status = 0;
+            $foto->save();
+
+
+            // Update the status of the booking
+            $booking = Booking::find($id);
+            $booking->status = 'pending';
+            $booking->save();
+
+
+            // get all fotopembayaran
+            $fotopembayaran = FotoPembayaran::where('pembayaran_id', $id)->get();
+            // count total amount of transfer
+            $totalTransfer = 0;
+            foreach ($fotopembayaran as $fotopembayaran) {
+                $totalTransfer += $fotopembayaran->jumlah_transfer;
+            }
+
+            // update the total amount of transfer to the booking
+            $booking = Booking::find($id);
+            $booking->jumlah_dibayar = $totalTransfer;
+
+
+            // get the booking
+            $booking = Booking::find($id);
+            // check if the total amount of transfer is equal to the total amount of the booking
+            if ($totalTransfer >= $booking->properti->harga) {
+                $booking->status = 'paid';
+                $booking->save();
+            } else {
+                $booking->status = 'loan';
+                $booking->save();
+            }
+        }
+
+        return redirect()->back()->with('success', 'Bukti transfer uploaded successfully.');
     }
 }

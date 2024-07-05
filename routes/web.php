@@ -33,6 +33,10 @@ Route::middleware(['web:admin'])->prefix('dashboard')->group(function () {
     Route::get('/riwayat', [BookingController::class, 'index'])->name('dashbord.riwayat');
     Route::get('/pembayaran', [PembayaranController::class, 'index_admin'])->name('dashbord.pembayaran');
     Route::post('/pembayaran/{id}', [PembayaranController::class, 'update_status'])->name('dashbord.update_status');
+
+    Route::get('/bayar', [PembayaranController::class, 'bayar'])->name('dashbord.bayar');
+    Route::post('/bayar/{id}', [PembayaranController::class, 'bayarData'])->name('dashbord.bayarpost');
+
     Route::get('/akun-user', [UserController::class, 'index'])->name('user.index');
     Route::resource('/kategori', KategoriPropertiController::class);
     Route::resource('/properti', PropertiController::class);
@@ -46,5 +50,8 @@ Route::middleware(['web:user'])->group(function () {
     Route::get('/riwayat', [UserController::class, 'riwayat'])->name('riwayat');
     Route::get('/detail-booking/{id}', [UserController::class, 'detail_booking'])->name('detail_booking');
     Route::get('/booking/{id}', [UserController::class, 'booking'])->name('checkout');
-});
 
+    Route::post('/uploadBayarFoto/{id}', [PembayaranController::class, 'uploadBuktiTransfer'])->name('uploadBuktiFotoBayar');
+
+    // Route::get('/pembayaran', [PembayaranController::class, 'bayarUser'])->name('pembayaran');
+});
